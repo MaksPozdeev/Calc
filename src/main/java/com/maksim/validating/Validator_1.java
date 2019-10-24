@@ -13,22 +13,22 @@ public class Validator_1 implements Validating {
 //        logger.info("isExpressionValid - init");
         mathExpression = mathExpression.replaceAll("\\s", "");
 
-        if(!isSymbolExpressionValid(mathExpression)){
+        if (!isSymbolExpressionValid(mathExpression)) {
             return false;
 //            logger.error("В выражении присутствуют некорректные символы");
         }
 
-        if(!isFirstSymbolCorrect(mathExpression)){
-          return false;
+        if (!isFirstSymbolCorrect(mathExpression)) {
+            return false;
 //            logger.error("В выражении некорректный первый символ");
         }
 
-        if(isDuplicateOperationsFound(mathExpression)){
+        if (isDuplicateOperationsFound(mathExpression)) {
             return false;
 //            logger.error("В выражении присутствуют подряд идущие операции. Пример: ++, ***, //, ...");
         }
 
-        if(!isBracketsExpressionValid(mathExpression)){
+        if (!isBracketsExpressionValid(mathExpression)) {
             return false;
 //            logger.error("В выражении некорректно расставлены скобки '(' и ')'");
         }
@@ -36,12 +36,10 @@ public class Validator_1 implements Validating {
     }
 
     public boolean isBracketsExpressionValid(String mathExpression) {
-        boolean result = false;
 //        не должно подряд идти несколько математичесикх операции   +
 //        не должно подряд идти несколько точек
 //        первая входящая скобка не должна быть )
 //        количество ( и ) скобок должно быть равно
-
         int leftBrackets = 0;
         for (int i = 0; i < mathExpression.length(); i++) {
             if (mathExpression.charAt(i) == '(') {
@@ -50,14 +48,18 @@ public class Validator_1 implements Validating {
             if (mathExpression.charAt(i) == ')') {
                 leftBrackets--;
                 if (leftBrackets < 0) {
-                    throw new ExpressionIsNotValidException("Найдено некоррекно поставленная закрывающая скобка: ')'");
+                    return false;
+//                    logger.error("Найдено некоррекно поставленная закрывающая скобка: ')'");
+//                    throw new ExpressionIsNotValidException("Найдено некоррекно поставленная закрывающая скобка: ')'");
                 }
             }
         }
         if (leftBrackets != 0) {
-            throw new ExpressionIsNotValidException("Количество '(' и ')' не одинаково");
+            return false;
+//            logger.error("Количество '(' и ')' не одинаково");
+//            throw new ExpressionIsNotValidException("Количество '(' и ')' не одинаково");
         }
-        return result;
+        return true;
     }
 
     public boolean isSymbolExpressionValid(String mathExpression) {
@@ -69,13 +71,13 @@ public class Validator_1 implements Validating {
         return mathExpression.isEmpty();
     }
 
-    public boolean isDuplicateOperationsFound(String mathExpression){
+    public boolean isDuplicateOperationsFound(String mathExpression) {
         Pattern p = Pattern.compile(RegularExpressions.RECURRING_OPERATIONS_REG_EX);
         Matcher m = p.matcher(mathExpression);
         return m.find();
     }
 
-    public boolean isFirstSymbolCorrect(String mathExpression){
+    public boolean isFirstSymbolCorrect(String mathExpression) {
         Pattern p = Pattern.compile(RegularExpressions.NOT_FIRST_REG_EX);
         Matcher m = p.matcher(mathExpression);
         return !m.find();
