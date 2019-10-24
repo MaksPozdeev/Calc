@@ -1,17 +1,19 @@
 package com.maksim.validating;
 
-import com.maksim.exceptions.ExpressionIsNotValidException;
-import com.maksim.regular_ex.RegularExpressions;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Validator_1 implements Validating {
+public class MyValidator implements Validator {
 
-    private static final Logger logger = LogManager.getLogger(Validator_1.class);
+    private static final Logger logger = LogManager.getLogger(MyValidator.class);
+    private static final String DELIMITER_REGEX = "([\\+\\-\\*\\/\\^\\(\\)]|$)";
+    private static final String NUMBERS_REG_EX = "(\\d+([\\.]\\d+)?)";
+    private static final String RECURRING_OPERATIONS_REG_EX = "(\\.|-+|\\++|\\*+|:+|\\^+){2,}";
+    private static final String NOT_FIRST_REG_EX = "^[\\+\\.\\*]";
+    private static final String NOT_END_REG_EX = "[\\+\\-\\*\\/\\^\\.\\(]$";
 
     @Override
     public boolean isExpressionValid(String mathExpression) {
@@ -24,6 +26,11 @@ public class Validator_1 implements Validating {
         }
 
         if (!isFirstSymbolCorrect(mathExpression)) {
+            logger.error("В выражении некорректный первый символ");
+            return false;
+        }
+
+        if (!isLastSymbolCorrect(mathExpression)) {
             logger.error("В выражении некорректный первый символ");
             return false;
         }
@@ -69,21 +76,28 @@ public class Validator_1 implements Validating {
 //        Удаляем цифры и символы делители: +-*/^() из выражения.
 //        Если длина выражения не нуль значит остались некорретные символы
         mathExpression = mathExpression.
-                replaceAll(RegularExpressions.NUMBERS_REG_EX, "").
-                replaceAll(RegularExpressions.DELIMITER_REGEX, "");
+                replaceAll(NUMBERS_REG_EX, "").
+                replaceAll(DELIMITER_REGEX, "");
         return mathExpression.isEmpty();
     }
 
     public boolean isDuplicateOperationsFound(String mathExpression) {
         logger.info("Method: isDuplicateOperationsFound() - init");
-        Pattern p = Pattern.compile(RegularExpressions.RECURRING_OPERATIONS_REG_EX);
+        Pattern p = Pattern.compile(RECURRING_OPERATIONS_REG_EX);
         Matcher m = p.matcher(mathExpression);
         return m.find();
     }
 
     public boolean isFirstSymbolCorrect(String mathExpression) {
         logger.info("Method: isFirstSymbolCorrect() - init");
-        Pattern p = Pattern.compile(RegularExpressions.NOT_FIRST_REG_EX);
+        Pattern p = Pattern.compile(NOT_FIRST_REG_EX);
+        Matcher m = p.matcher(mathExpression);
+        return !m.find();
+    }
+
+    public boolean isLastSymbolCorrect(String mathExpression) {
+        logger.info("Method: isLastSymbolCorrect() - init");
+        Pattern p = Pattern.compile(NOT_END_REG_EX);
         Matcher m = p.matcher(mathExpression);
         return !m.find();
     }

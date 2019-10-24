@@ -1,16 +1,12 @@
-package com.maksim.calculated;
+package com.maksim.service.calculate;
 
-import com.maksim.exceptions.ExpressionIsNotValidException;
-import com.maksim.regular_ex.RegularExpressions;
-import com.maksim.validating.Validator_1;
+import com.maksim.validating.MyValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static java.util.regex.Pattern.matches;
+public class MyCalculator implements Calculator {
 
-public class CalculateImp_1 implements Calculated {
-
-    private static final Logger logger = LogManager.getLogger(CalculateImp_1.class);
+    private static final Logger logger = LogManager.getLogger(MyCalculator.class);
 
     @Override
     public double calculate(String mathExpression) {
@@ -20,8 +16,8 @@ public class CalculateImp_1 implements Calculated {
 //        Проверка валидности строки mathExpression
 //        in (String):	mathExpression
 //        out (Boolean): true/false
-        Validator_1 validator_1 = new Validator_1();
-        if (!validator_1.isExpressionValid(mathExpression)) {
+        MyValidator validator_My_ = new MyValidator();
+        if (!validator_My_.isExpressionValid(mathExpression)) {
         logger.error("Введено некорректное выражение");
 //            throw new ExpressionIsNotValidException("Введено некорректное выражение");
         } else {

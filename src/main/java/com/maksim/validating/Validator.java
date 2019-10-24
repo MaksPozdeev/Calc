@@ -1,6 +1,6 @@
 package com.maksim.validating;
 
-public interface Validating {
+public interface Validator {
 
     boolean isExpressionValid(String mathExpression);
 
