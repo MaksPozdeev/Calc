@@ -6,11 +6,13 @@ import com.maksim.service.converter.PostfixRecord;
 import com.maksim.validating.MyValidator;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Experimental {
-    public static void main(String[] args) {
-        String mathExpression1 = "-7.3+4*((43.7-2)/3)+6";
+    public static void main(String[] args) throws Exception {
+//        String mathExpression1 = "-7.3+4*((-43.7-2)/3)+6";
+        String mathExpression1 = "-7.3+4*(-43.7-2)/3+6";
         String mathExpression2 = "-7.3++4***((43..7--2)()/3)+6";
         String mathExpression3 = "-7.3+4*((43.7-2)/3)+6";
         String mathExpression4 = ".7.3+4*((43.7-2)/3)+6";
@@ -24,8 +26,9 @@ public class Experimental {
         String mathExpression12 = "-7.3+4*((43.7-2)/3)+6+(";
         String mathExpression13 = "-7.3+4*((43.7-2)/3)+6(";
         String mathExpression14 = "7.3+4*((43.7-2)/3)+6";
-
-
+        String mathExpression15 = "3+3^3";
+        String mathExpression16 = "-5-2";
+        String mathExpression17 = "10-2";
 
 //        MyValidator myValidator = new MyValidator();
 //        System.out.println(myValidator.isLastSymbolCorrect(mathExpression1));
@@ -52,11 +55,31 @@ public class Experimental {
 //        System.out.println(calc.calculate(mathExpression7));
 //        System.out.println(calc.calculate(mathExpression8));
 
-        List<String> listTokens;
-        listTokens = PostfixRecord.strToPostfix(mathExpression1);
-        for (String token : listTokens){
+//        LinkedList<String> stack = new LinkedList<>();
+//        System.out.println(stack.size());
+
+//        List<String> listTokens = PostfixRecord.strToPostfix(mathExpression1);
+//        for (String token : listTokens){
+//            System.out.print(token);
+//        }
+//
+//        System.out.println();
+//        List<String> listTokens2 = PostfixRecord.strToPostfix(mathExpression2);
+//        for (String token : listTokens2){
+//            System.out.print(token);
+//        }
+
+        String formula = mathExpression1;
+        System.out.println(formula);
+
+        List<String> listTokens1 = PostfixRecord.strToPostfix(formula);
+        for (String token : listTokens1){
             System.out.print(token);
         }
+        System.out.println();
+        Calculator calc = new MyCalculator();
+        System.out.println(calc.calculate(formula));
+
 
 //        v.isMathExpressionValid(mathExpression);
 //        System.out.println(v.isDuplicateOperationsFound(mathExpression3));

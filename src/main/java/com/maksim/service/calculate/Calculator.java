@@ -2,6 +2,6 @@ package com.maksim.service.calculate;
 
 public interface Calculator {
 
-    double calculate (String mathExpression);
+    double calculate (String mathExpression) throws Exception;
 
 }

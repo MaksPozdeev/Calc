@@ -8,10 +8,10 @@ import org.apache.logging.log4j.Logger;
 public class Application {
     private static final Logger logger = LogManager.getLogger(MyCalculator.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         logger.info("Method: main() - init");
 
-        String mathExpression = "-7.3+4*((43.7-2)/3)+6";
+        String mathExpression = "-7.3+4*(((43.7-2)/3)+6";
 
         Calculator calc = new MyCalculator();
 

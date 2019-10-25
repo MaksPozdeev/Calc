@@ -11,7 +11,8 @@ public class MyValidator implements Validator {
     private static final Logger logger = LogManager.getLogger(MyValidator.class);
     private static final String DELIMITER_REGEX = "([\\+\\-\\*\\/\\^\\(\\)]|$)";
     private static final String NUMBERS_REG_EX = "(\\d+([\\.]\\d+)?)";
-    private static final String RECURRING_OPERATIONS_REG_EX = "(\\.|-+|\\++|\\*+|:+|\\^+){2,}";
+//    2 или 3 операции подряд / подумать
+    private static final String RECURRING_OPERATIONS_REG_EX = "(\\.|-+|\\++|\\*+|:+|\\^+){3,}";
     private static final String NOT_FIRST_REG_EX = "^[\\+\\.\\*]";
     private static final String NOT_END_REG_EX = "[\\+\\-\\*\\/\\^\\.\\(]$";
 
@@ -31,7 +32,7 @@ public class MyValidator implements Validator {
         }
 
         if (!isLastSymbolCorrect(mathExpression)) {
-            logger.error("В выражении некорректный первый символ");
+            logger.error("В выражении некорректный последний символ");
             return false;
         }
 
