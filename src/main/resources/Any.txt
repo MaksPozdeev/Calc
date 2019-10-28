@@ -1,14 +1,3 @@
-package com.maksim;
-
-import com.maksim.service.calculate.Calculator;
-import com.maksim.service.calculate.MyCalculator;
-import com.maksim.service.converter.PostfixRecord;
-import com.maksim.validating.MyValidator;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 public class Experimental {
     public static void main(String[] args) throws Exception {
 //        String mathExpression1 = "-7.3+4*((-43.7-2)/3)+6";
@@ -73,7 +62,7 @@ public class Experimental {
         System.out.println(formula);
 
         List<String> listTokens1 = PostfixRecord.strToPostfix(formula);
-        for (String token : listTokens1){
+        for (String token : listTokens1) {
             System.out.print(token);
         }
         System.out.println();

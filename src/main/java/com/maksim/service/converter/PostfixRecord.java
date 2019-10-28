@@ -15,7 +15,6 @@ public class PostfixRecord {
     private static final Logger logger = LogManager.getLogger(PostfixRecord.class);
     private static final String DELIMITER_REGEX = "([\\+\\-\\*\\/\\^\\(\\)]|$)";
 
-
     public static LinkedList<String> strToPostfix(String mathExpression) {
         logger.info("Method: strToPostfix() - init");
         mathExpression = mathExpression.replaceAll("\\s", "");
@@ -53,14 +52,13 @@ public class PostfixRecord {
                 continue;
             }
 
-
             if (Operations.isOperation(token)) {
                 while (!stack.isEmpty()) {
-//                    Проверка на унарный минус
+////                    Проверка на унарный минус
 //                    if (token.equals("-")) {
 ////                    Вариант когда - это первый символ мат.выражения
 //                        boolean isTokenIsFirst = prevLeks.equals("");
-////                    если операции +-*/(, но не ) после которых стоит -, то это унарный минус
+////                    если операции "-" предшествуют операции +-*/(, но не ), то это унарный минус
 //                        boolean isPrevIsOperations = Operations.isOperation(prevLeks) && !prevLeks.equals("\\)");
 //                        if (isTokenIsFirst || isPrevIsOperations) {
 //                            stack.add(token);
@@ -72,6 +70,7 @@ public class PostfixRecord {
                     } else {
                         break;
                     }
+
                 }
                 stack.add(token);
             }
@@ -88,7 +87,7 @@ public class PostfixRecord {
         return str.matches("\\d+(\\.\\d+)?");
     }
 
-    public static List<String> getTokens(String mathExpression) {
+    private static List<String> getTokens(String mathExpression) {
         logger.info("Method: getTokens() - init");
         logger.info("");
         List<String> stringTokensList = new ArrayList<>();
@@ -99,7 +98,6 @@ public class PostfixRecord {
         String strTmp;
         while (matcher.find()) {
             endPos = matcher.start();
-//          Получаем всё до оператора и добавляем в list
             strTmp = mathExpression.substring(startPos, endPos);
             if (!strTmp.isEmpty()) {
                 stringTokensList.add(strTmp);

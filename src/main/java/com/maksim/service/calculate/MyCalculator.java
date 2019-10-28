@@ -13,13 +13,11 @@ public class MyCalculator implements Calculator {
     private static final Logger logger = LogManager.getLogger(MyCalculator.class);
 
     @Override
-    public double calculate(String mathExpression) throws Exception {
+    public double calculate(String mathExpression) {
         logger.info("Method: calculate() - init");
-        double result = 0;
+        double result;
 
 //        Проверка валидности строки mathExpression
-//        in (String):	mathExpression
-//        out (Boolean): true/false
         MyValidator validator_My_ = new MyValidator();
         if (!validator_My_.isExpressionValid(mathExpression)) {
             logger.error("Введено некорректное выражение");
@@ -29,14 +27,9 @@ public class MyCalculator implements Calculator {
         }
 
 //        переводим/получаем mathExpression в постфксный вид (RPN-обратная польская нотация)
-//        in (Stirng): mathExpression
-//        out (List<String>): mathExpressionRPN
         LinkedList<String> strPostfix = PostfixRecord.strToPostfix(mathExpression);
 
 //        производим вычисление значения выражения из обратной польской нотации:
-//        in (List<String>): mathExpressionRPN
-//        out (double): result
-
         LinkedList<String> outPostfixString = new LinkedList<>();
         LinkedList<String> stack = new LinkedList<>();
         double tmp1 = 0;

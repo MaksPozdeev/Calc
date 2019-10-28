@@ -13,7 +13,6 @@ public class Operations {
     private static final Map<String, Integer> MATH_OPERATIONS = new HashMap<>();
 
     static {
-//        MATH_OPERATIONS.put("u-", 0);
         MATH_OPERATIONS.put("(", 5);
         MATH_OPERATIONS.put("+", 10);
         MATH_OPERATIONS.put("-", 10);

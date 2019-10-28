@@ -1,18 +1,18 @@
 package com.maksim.validating;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import com.maksim.exceptions.ExpressionIsNotValidException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MyValidator implements Validator {
 
     private static final Logger logger = LogManager.getLogger(MyValidator.class);
     private static final String DELIMITER_REGEX = "([\\+\\-\\*\\/\\^\\(\\)]|$)";
     private static final String NUMBERS_REG_EX = "(\\d+([\\.]\\d+)?)";
-//    2 или 3 операции подряд / подумать
-    private static final String RECURRING_OPERATIONS_REG_EX = "(\\.|-+|\\++|\\*+|:+|\\^+){3,}";
+    private static final String RECURRING_OPERATIONS_REG_EX = "(\\.|\\++|\\*+|:+|\\^+){2,}|(-+){3,}";
     private static final String NOT_FIRST_REG_EX = "^[\\+\\.\\*]";
     private static final String NOT_END_REG_EX = "[\\+\\-\\*\\/\\^\\.\\(]$";
 
@@ -23,32 +23,32 @@ public class MyValidator implements Validator {
 
         if (!isSymbolExpressionValid(mathExpression)) {
             logger.error("В выражении присутствуют некорректные символы");
-            return false;
+            throw new ExpressionIsNotValidException("В выражении присутствуют некорректные символы");
         }
 
         if (!isFirstSymbolCorrect(mathExpression)) {
             logger.error("В выражении некорректный первый символ");
-            return false;
+            throw new ExpressionIsNotValidException("В выражении некорректный первый символ");
         }
 
         if (!isLastSymbolCorrect(mathExpression)) {
             logger.error("В выражении некорректный последний символ");
-            return false;
+            throw new ExpressionIsNotValidException("В выражении некорректный последний символ");
         }
 
         if (isDuplicateOperationsFound(mathExpression)) {
             logger.error("В выражении присутствуют подряд идущие операции. Пример: ++, ***, //, ...");
-            return false;
+            throw new ExpressionIsNotValidException("В выражении присутствуют подряд идущие операции. Пример: ++, ***, //, ...");
         }
 
         if (!isBracketsExpressionValid(mathExpression)) {
             logger.error("В выражении некорректно расставлены скобки '(' и ')'");
-            return false;
+            throw new ExpressionIsNotValidException("В выражении некорректно расставлены скобки '(' и ')'\"");
         }
         return true;
     }
 
-    public boolean isBracketsExpressionValid(String mathExpression) {
+    private boolean isBracketsExpressionValid(String mathExpression) {
         logger.info("Method: isBracketsExpressionValid() - init");
         int leftBrackets = 0;
         for (int i = 0; i < mathExpression.length(); i++) {
@@ -58,45 +58,43 @@ public class MyValidator implements Validator {
             if (mathExpression.charAt(i) == ')') {
                 leftBrackets--;
                 if (leftBrackets < 0) {
-                    logger.error("Найдено некоррекно поставленная закрывающая скобка: ')'");
-                    return false;
-//                    throw new ExpressionIsNotValidException("Найдено некоррекно поставленная закрывающая скобка: ')'");
+                    logger.error("Найдено некоррекно поставленная закрывающая скобка: ')'" + i);
+                    throw new ExpressionIsNotValidException("Найдено некоррекно поставленная закрывающая скобка: ')'");
                 }
             }
         }
         if (leftBrackets != 0) {
             logger.error("Количество '(' и ')' не одинаково");
-            return false;
-//            throw new ExpressionIsNotValidException("Количество '(' и ')' не одинаково");
+            throw new ExpressionIsNotValidException("Количество '(' и ')' не одинаково");
         }
         return true;
     }
 
-    public boolean isSymbolExpressionValid(String mathExpression) {
+    private boolean isSymbolExpressionValid(String mathExpression) {
         logger.info("Method: isSymbolExpressionValid() - init");
 //        Удаляем цифры и символы делители: +-*/^() из выражения.
 //        Если длина выражения не нуль значит остались некорретные символы
-        mathExpression = mathExpression.
-                replaceAll(NUMBERS_REG_EX, "").
-                replaceAll(DELIMITER_REGEX, "");
+        mathExpression = mathExpression
+                .replaceAll(NUMBERS_REG_EX, "")
+                .replaceAll(DELIMITER_REGEX, "");
         return mathExpression.isEmpty();
     }
 
-    public boolean isDuplicateOperationsFound(String mathExpression) {
+    private boolean isDuplicateOperationsFound(String mathExpression) {
         logger.info("Method: isDuplicateOperationsFound() - init");
         Pattern p = Pattern.compile(RECURRING_OPERATIONS_REG_EX);
         Matcher m = p.matcher(mathExpression);
         return m.find();
     }
 
-    public boolean isFirstSymbolCorrect(String mathExpression) {
+    private boolean isFirstSymbolCorrect(String mathExpression) {
         logger.info("Method: isFirstSymbolCorrect() - init");
         Pattern p = Pattern.compile(NOT_FIRST_REG_EX);
         Matcher m = p.matcher(mathExpression);
         return !m.find();
     }
 
-    public boolean isLastSymbolCorrect(String mathExpression) {
+    private boolean isLastSymbolCorrect(String mathExpression) {
         logger.info("Method: isLastSymbolCorrect() - init");
         Pattern p = Pattern.compile(NOT_END_REG_EX);
         Matcher m = p.matcher(mathExpression);

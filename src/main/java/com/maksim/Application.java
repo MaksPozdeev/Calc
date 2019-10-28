@@ -11,13 +11,19 @@ public class Application {
     public static void main(String[] args) throws Exception {
         logger.info("Method: main() - init");
 
-        String mathExpression = "-7.3+4*(((43.7-2)/3)+6";
+        String mathExpression = "-7.3+4*((-43.7-2)/3)+6";
 
         Calculator calc = new MyCalculator();
 
-        double result = calc.calculate(mathExpression);
+        try {
+            double result = calc.calculate(mathExpression);
+            System.out.println("Результат: " + result);
+        } catch (Exception e) {
+            logger.error("Возникла какая-то ошибка: " + e);
+        } finally {
+            System.err.println("Возникла ошибка проверьте логи");
+        }
 
-        System.out.println("Результат: " + result);
 
     }
 }
