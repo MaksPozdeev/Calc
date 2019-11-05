@@ -23,7 +23,6 @@ public class PostfixRecord {
 
         List<String> listTokens = getTokens(mathExpression);
         boolean tmp;
-        String prevLeks = "";
         for (String token : listTokens) {
             if (isNumber(token)) {
                 outPostfixString.add(token);
@@ -54,27 +53,14 @@ public class PostfixRecord {
 
             if (Operations.isOperation(token)) {
                 while (!stack.isEmpty()) {
-////                    Проверка на унарный минус
-//                    if (token.equals("-")) {
-////                    Вариант когда - это первый символ мат.выражения
-//                        boolean isTokenIsFirst = prevLeks.equals("");
-////                    если операции "-" предшествуют операции +-*/(, но не ), то это унарный минус
-//                        boolean isPrevIsOperations = Operations.isOperation(prevLeks) && !prevLeks.equals("\\)");
-//                        if (isTokenIsFirst || isPrevIsOperations) {
-//                            stack.add(token);
-//                            break;
-//                        }
-//                    }
                     if (Operations.getPrior(token) <= Operations.getPrior(stack.getLast())) {
                         outPostfixString.add(stack.removeLast());
                     } else {
                         break;
                     }
-
                 }
                 stack.add(token);
             }
-            prevLeks = token;
         }
 
         while (!stack.isEmpty()) {
@@ -109,5 +95,4 @@ public class PostfixRecord {
         }
         return stringTokensList;
     }
-
 }

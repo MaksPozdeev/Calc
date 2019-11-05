@@ -72,8 +72,6 @@ public class MyValidator implements Validator {
 
     private boolean isSymbolExpressionValid(String mathExpression) {
         logger.info("Method: isSymbolExpressionValid() - init");
-//        Удаляем цифры и символы делители: +-*/^() из выражения.
-//        Если длина выражения не нуль значит остались некорретные символы
         mathExpression = mathExpression
                 .replaceAll(NUMBERS_REG_EX, "")
                 .replaceAll(DELIMITER_REGEX, "");

@@ -17,24 +17,19 @@ public class MyCalculator implements Calculator {
         logger.info("Method: calculate() - init");
         double result;
 
-//        Проверка валидности строки mathExpression
         MyValidator validator_My_ = new MyValidator();
         if (!validator_My_.isExpressionValid(mathExpression)) {
             logger.error("Введено некорректное выражение");
-//            throw new ExpressionIsNotValidException("Введено некорректное выражение");
         } else {
             logger.info("всё ок - продолжаем");
         }
 
-//        переводим/получаем mathExpression в постфксный вид (RPN-обратная польская нотация)
         LinkedList<String> strPostfix = PostfixRecord.strToPostfix(mathExpression);
 
-//        производим вычисление значения выражения из обратной польской нотации:
-        LinkedList<String> outPostfixString = new LinkedList<>();
         LinkedList<String> stack = new LinkedList<>();
-        double tmp1 = 0;
-        double tmp2 = 0;
-        double tmpResult = 0;
+        double tmp1;
+        double tmp2;
+        double tmpResult;
 
         for (String token : strPostfix) {
             if (PostfixRecord.isNumber(token)) {
@@ -42,7 +37,6 @@ public class MyCalculator implements Calculator {
                 continue;
             }
 
-//            Унарный минус (или функция)
             if (token.equals("-")) {
                 if (stack.size() == 1 || stack.size() == 3) {
                     stack.add("-" + stack.removeLast());
