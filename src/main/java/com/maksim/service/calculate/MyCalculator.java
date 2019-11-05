@@ -3,22 +3,22 @@ package com.maksim.service.calculate;
 import com.maksim.service.Operations;
 import com.maksim.service.converter.PostfixRecord;
 import com.maksim.validating.MyValidator;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.LinkedList;
 
 public class MyCalculator implements Calculator {
 
-    private static final Logger logger = LogManager.getLogger(MyCalculator.class);
+    private static final Logger logger = LoggerFactory.getLogger(MyCalculator.class);
 
     @Override
     public double calculate(String mathExpression) {
         logger.info("Method: calculate() - init");
         double result;
 
-        MyValidator validator_My_ = new MyValidator();
-        if (!validator_My_.isExpressionValid(mathExpression)) {
+        MyValidator myValidator = new MyValidator();
+        if (!myValidator.isExpressionValid(mathExpression)) {
             logger.error("Введено некорректное выражение");
         } else {
             logger.info("всё ок - продолжаем");

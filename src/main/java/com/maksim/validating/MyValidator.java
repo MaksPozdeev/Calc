@@ -1,15 +1,15 @@
 package com.maksim.validating;
 
 import com.maksim.exceptions.ExpressionIsNotValidException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MyValidator implements Validator {
 
-    private static final Logger logger = LogManager.getLogger(MyValidator.class);
+    private static final Logger logger = LoggerFactory.getLogger(MyValidator.class);
     private static final String DELIMITER_REGEX = "([\\+\\-\\*\\/\\^\\(\\)]|$)";
     private static final String NUMBERS_REG_EX = "(\\d+([\\.]\\d+)?)";
     private static final String RECURRING_OPERATIONS_REG_EX = "(\\.|\\++|\\*+|:+|\\^+){2,}|(-+){3,}";

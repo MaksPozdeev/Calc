@@ -1,24 +1,34 @@
 package com.maksim.service;
 
 import com.maksim.exceptions.ExpressionIsNotValidException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Operations {
 
-    private static final Logger logger = LogManager.getLogger(Operations.class);
+    private static final Logger logger = LoggerFactory.getLogger(Operations.class);
+
+    public static final String BRACKET = "(";
+//    public static final String ADDITION = "+";
+    public static final String ADDITION = "+";
+
+    public static final String SUBTRACTION = "-";
+    public static final String MULTIPLICATION = "*";
+    public static final String DIVISION = "/";
+    public static final String POW= "^";
+
     private static final Map<String, Integer> MATH_OPERATIONS = new HashMap<>();
 
     static {
-        MATH_OPERATIONS.put("(", 5);
-        MATH_OPERATIONS.put("+", 10);
-        MATH_OPERATIONS.put("-", 10);
-        MATH_OPERATIONS.put("*", 20);
-        MATH_OPERATIONS.put("/", 20);
-        MATH_OPERATIONS.put("^", 30);
+        MATH_OPERATIONS.put(BRACKET, 5);
+        MATH_OPERATIONS.put(ADDITION, 10);
+        MATH_OPERATIONS.put(SUBTRACTION, 10);
+        MATH_OPERATIONS.put(MULTIPLICATION, 20);
+        MATH_OPERATIONS.put(DIVISION, 20);
+        MATH_OPERATIONS.put(POW, 30);
     }
 
     public static Integer getPrior(String operation) {

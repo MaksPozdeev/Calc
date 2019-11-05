@@ -2,11 +2,11 @@ package com.maksim;
 
 import com.maksim.service.calculate.Calculator;
 import com.maksim.service.calculate.MyCalculator;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Application {
-    private static final Logger logger = LogManager.getLogger(MyCalculator.class);
+    private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) {
         logger.info("Method: main() - init");
@@ -21,7 +21,7 @@ public class Application {
         } catch (Exception e) {
             logger.error("Возникла какая-то ошибка: " + e);
         } finally {
-            System.err.println("Возникла ошибка проверьте логи");
+//            System.err.println("Возникла ошибка проверьте логи");
         }
 
 
