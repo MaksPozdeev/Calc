@@ -11,14 +11,12 @@ public class Operations {
 
     private static final Logger logger = LoggerFactory.getLogger(Operations.class);
 
-    public static final String BRACKET = "(";
-//    public static final String ADDITION = "+";
-    public static final String ADDITION = "+";
-
-    public static final String SUBTRACTION = "-";
-    public static final String MULTIPLICATION = "*";
-    public static final String DIVISION = "/";
-    public static final String POW= "^";
+    private static final String BRACKET = "(";
+    private static final String ADDITION = "+";
+    private static final String SUBTRACTION = "-";
+    private static final String MULTIPLICATION = "*";
+    private static final String DIVISION = "/";
+    private static final String POW = "^";
 
     private static final Map<String, Integer> MATH_OPERATIONS = new HashMap<>();
 

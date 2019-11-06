@@ -20,10 +20,7 @@ public class Application {
             System.out.println("Результат: " + result);
         } catch (Exception e) {
             logger.error("Возникла какая-то ошибка: " + e);
-        } finally {
-//            System.err.println("Возникла ошибка проверьте логи");
         }
-
 
     }
 }

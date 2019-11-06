@@ -8,21 +8,21 @@
 
     <appender name="FILE"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>slf4jlogbackexample.log</file>
+        <file>logs/slf4jlogback.log</file>
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>slf4jlogbackexample.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>slf4jlogback.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>10</maxHistory>
             <totalSizeCap>30MB</totalSizeCap>
 
         </rollingPolicy>
         <encoder>
-            <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} [%thread] %-5level  %logger{20} - %msg%n</pattern>
+            <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{20} - %msg%n</pattern>
         </encoder>
     </appender>
 
     <root level="debug">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE" />
+        <!--        <appender-ref ref="STDOUT" />-->
+        <appender-ref ref="FILE"/>
     </root>
 </configuration>
