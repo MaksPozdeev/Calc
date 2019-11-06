@@ -11,13 +11,14 @@ import java.util.LinkedList;
 public class MyCalculator implements Calculator {
 
     private static final Logger logger = LoggerFactory.getLogger(MyCalculator.class);
+    private MyValidator myValidator = new MyValidator();
+    private LinkedList<String> stack = new LinkedList<>();
 
     @Override
     public double calculate(String mathExpression) {
         logger.info("Method: calculate() - init");
         double result;
 
-        MyValidator myValidator = new MyValidator();
         if (!myValidator.isExpressionValid(mathExpression)) {
             logger.error("Введено некорректное выражение");
         } else {
@@ -25,11 +26,6 @@ public class MyCalculator implements Calculator {
         }
 
         LinkedList<String> strPostfix = PostfixRecord.strToPostfix(mathExpression);
-
-        LinkedList<String> stack = new LinkedList<>();
-        double tmp1;
-        double tmp2;
-        double tmpResult;
 
         for (String token : strPostfix) {
             if (PostfixRecord.isNumber(token)) {
@@ -45,38 +41,45 @@ public class MyCalculator implements Calculator {
             }
 
             if (Operations.isOperation(token)) {
-                tmp2 = Double.parseDouble(stack.removeLast());
-                tmp1 = Double.parseDouble(stack.removeLast());
-                switch (token) {
-                    case "+": {
-                        tmpResult = tmp1 + tmp2;
-                        break;
-                    }
-                    case "-": {
-                        tmpResult = tmp1 - tmp2;
-                        break;
-                    }
-                    case "*": {
-                        tmpResult = tmp1 * tmp2;
-                        break;
-                    }
-                    case "/": {
-                        tmpResult = tmp1 / tmp2;
-                        break;
-                    }
-                    case "^": {
-                        tmpResult = Math.pow(tmp1, tmp2);
-                        break;
-                    }
-                    default: {
-                        throw new IllegalArgumentException("Не найдена операция");
-                    }
-                }
+                double tmp2 = Double.parseDouble(stack.removeLast());
+                double tmp1 = Double.parseDouble(stack.removeLast());
+                double tmpResult;
+                tmpResult = operationsRun(token, tmp1, tmp2);
                 stack.add(Double.toString(tmpResult));
             }
         }
 
         result = Double.parseDouble(stack.removeLast());
+        return result;
+    }
+
+    private double operationsRun(String token, double tmp1, double tmp2) {
+        double result;
+        switch (token) {
+            case "+": {
+                result = tmp1 + tmp2;
+                break;
+            }
+            case "-": {
+                result = tmp1 - tmp2;
+                break;
+            }
+            case "*": {
+                result = tmp1 * tmp2;
+                break;
+            }
+            case "/": {
+                result = tmp1 / tmp2;
+                break;
+            }
+            case "^": {
+                result = Math.pow(tmp1, tmp2);
+                break;
+            }
+            default: {
+                throw new IllegalArgumentException("Не найдена операция");
+            }
+        }
         return result;
     }
 

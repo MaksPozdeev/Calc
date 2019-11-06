@@ -75,7 +75,6 @@ public class PostfixRecord {
 
     private static List<String> getTokens(String mathExpression) {
         logger.info("Method: getTokens() - init");
-        logger.info("");
         List<String> stringTokensList = new ArrayList<>();
         Pattern pattern = Pattern.compile(DELIMITER_REGEX);
         Matcher matcher = pattern.matcher(mathExpression);
