@@ -1,19 +1,26 @@
 package com.maksim;
 
-import com.maksim.calculated.Calculated;
-import com.maksim.calculated.CalculateImp_1;
+import com.maksim.service.calculate.Calculator;
+import com.maksim.service.calculate.MyCalculator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Application {
+    private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) {
+        logger.info(" ============================== Method: main() - init ==============================");
 
-        String mathExpression = "-7.3+4*((43.7-2)/3)+6";
+        String mathExpression = "-7.3+4*((-43.7-2)/3)+6";
 
-        Calculated calc = new CalculateImp_1();
+        Calculator calc = new MyCalculator();
 
-        double result = calc.calculate(mathExpression);
-
-        System.out.println("Результат: " + result);
+        try {
+            double result = calc.calculate(mathExpression);
+            System.out.println("Результат: " + result);
+        } catch (Exception e) {
+            logger.error("Возникла какая-то ошибка: " + e);
+        }
 
     }
 }
